@@ -16,10 +16,10 @@ export class PostCardComponent {
   isActive: boolean = false;
 
   ngOnChanges() {
-    this.checkIfActive();
+    this.updateActiveStatus();
   }
 
-  checkIfActive() {
+  updateActiveStatus() {
     this.isActive = this.post?.id === this.activePostId;
   }
 
