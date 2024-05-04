@@ -1,7 +1,14 @@
 .post-card-container {
-  background-color: lightblue;
-  border-radius: 5px;
-  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
   overflow-x: auto;
   overflow-y: auto;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+}
+
+.post-card-container:hover {
+  background-color: #e0f4f4 !important; /* Lighter shade for hover */
+  cursor: pointer;
 }

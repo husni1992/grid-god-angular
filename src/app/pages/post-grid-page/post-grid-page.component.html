@@ -1,17 +1,19 @@
-@if (isLoading) {
-  <div class="progress-bar">Loading...</div>
-}
-
-@if (activePostId) {
-  <div class="active-post-id">Active post id: {{ activePostId }}</div>
-}
-
-<div class="post-grid-container">
-  @for (post of posts; track post.id) {
-    <app-post-card
-      [post]="post"
-      [activePostId]="activePostId"
-      (setActivePost)="setActivePost($event)"
-    />
+<div class="post-grid-page">
+  @if (isLoading) {
+    <div class="progress-bar">Loading...</div>
   }
+
+  @if (activePostId) {
+    <div class="active-post-id">Active post id: {{ activePostId }}</div>
+  }
+
+  <div class="post-grid-container">
+    @for (post of posts; track post.id) {
+      <app-post-card
+        [post]="post"
+        [activePostId]="activePostId"
+        (setActivePost)="setActivePost($event)"
+      />
+    }
+  </div>
 </div>

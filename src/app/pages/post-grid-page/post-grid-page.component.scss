@@ -1,13 +1,18 @@
-.post-grid-container {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: 10px;
+.post-grid-page {
+  background-color: #f8f9fa;
+  padding: 10px;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(7, 1fr);
+  .post-grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 20px;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(7, 1fr);
+    }
   }
-}
 
-.active-post-id {
-  margin: 10px 0;
+  .active-post-id {
+    margin: 10px 0;
+  }
 }
