@@ -2,6 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import classNames from 'classnames';
 
 import { Post } from '../../models/Post.model';
+import { DEFAULT_PROPERTY_TO_DISPLAY, PROPERTIES_OF_POST } from './constants';
+import { calculateHeightBasedOnWidthAndPadding, getNextKeyOfObject } from './utils';
 
 @Component({
   selector: 'app-post-card',
@@ -15,22 +17,26 @@ export class PostCardComponent {
   @Input() activePostId: Post['id'] | undefined;
   @Output() setActivePost = new EventEmitter<Post['id']>();
 
-  @ViewChild('postCard') selfElement: ElementRef | undefined;
+  @ViewChild('postCardContainer') selfElement: ElementRef | undefined;
 
   isActive: boolean = false;
+  currentProperty: keyof Post = DEFAULT_PROPERTY_TO_DISPLAY;
 
   ngOnChanges() {
     this.updateActiveStatus();
+    this.updateDisplayProperty();
   }
 
   ngAfterViewInit() {
-    this.setSelfElementHeight();
+    if (this.selfElement) {
+      const heightOfSelf = calculateHeightBasedOnWidthAndPadding(this.selfElement);
+      this.setElementHeight(this.selfElement, heightOfSelf);
+    }
   }
 
   get postCardClasses() {
     return classNames('post-card-container', {
       active: this.isActive,
-      inactive: !this.isActive,
     });
   }
 
@@ -38,16 +44,25 @@ export class PostCardComponent {
     this.isActive = this.post?.id === this.activePostId;
   }
 
-  setSelfElementHeight() {
-    if (this.selfElement) {
-      const width = this.selfElement.nativeElement.offsetWidth;
-      const padding = parseInt(getComputedStyle(this.selfElement.nativeElement)['paddingTop']);
+  setElementHeight(element: ElementRef, height: number) {
+    element.nativeElement.style.height = `${height}px`;
+  }
 
-      this.selfElement.nativeElement.style.height = `${width - padding * 2}px`;
+  rotateDisplayProperty() {
+    this.currentProperty = getNextKeyOfObject(this.currentProperty, PROPERTIES_OF_POST);
+  }
+
+  updateDisplayProperty() {
+    if (this.post?.id !== this.activePostId) {
+      this.currentProperty = DEFAULT_PROPERTY_TO_DISPLAY;
     }
   }
 
   onClick() {
-    this.setActivePost.emit(this.post?.id);
+    if (this.post?.id !== this.activePostId) {
+      this.setActivePost.emit(this.post?.id);
+    }
+
+    this.rotateDisplayProperty();
   }
 }

@@ -1,3 +1,5 @@
-<div #postCard [class]="postCardClasses" (click)="onClick()">
-  {{ post?.title }}
-</div>
+@if (post) {
+  <div #postCardContainer [class]="postCardClasses" (click)="onClick()">
+    {{ post[currentProperty] }}
+  </div>
+}
