@@ -11,13 +11,22 @@ import { PostCardComponent } from '../../components/post-card/post-card.componen
   styleUrl: './post-grid-page.component.scss',
 })
 export class PostGridPageComponent {
+  isLoading: boolean = true; // TODO: implement MUI progress bar?
   posts: Post[] | undefined;
+  activePostId: Post['id'] | undefined;
 
   constructor(private postService: PostService) {}
 
   ngOnInit() {
     this.postService.getPosts().subscribe((data) => {
-      this.posts = data;
+      setTimeout(() => {
+        this.posts = data;
+        this.isLoading = false;
+      }, 300);
     });
+  }
+
+  setActivePost(postId: Post['id']): void {
+    this.activePostId = postId;
   }
 }

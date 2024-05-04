@@ -1,0 +1,16 @@
+.post-grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 10px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+.item {
+  background-color: rgb(33, 190, 221);
+  border: 1px solid black;
+  overflow-x: auto;
+  overflow-y: auto;
+}

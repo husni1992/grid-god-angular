@@ -1,1 +1,7 @@
-<span style="margin: 10px; border: 1px solid red">{{ post?.title }}</span>
+<div
+  class="post-card-container"
+  [style.background-color]="isActive ? '#73c7af' : '#ffffff'"
+  (click)="onClick()"
+>
+  {{ post?.title }}
+</div>

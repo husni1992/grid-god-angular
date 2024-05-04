@@ -1,7 +1,13 @@
-<p>post-grid-page works!</p>
+@if (isLoading) {
+  <div class="loading-sdivinner">Loading...</div>
+}
 
 <div class="post-grid-container">
   @for (post of posts; track post.id) {
-    <app-post-card [post]="post" />
+    <app-post-card
+      [post]="post"
+      [activePostId]="activePostId"
+      (setActivePost)="setActivePost($event)"
+    />
   }
 </div>
