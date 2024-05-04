@@ -1,10 +1,3 @@
-<div
-  #postCard
-  class="post-card-container"
-
-  [style.color]="isActive ? '#216583' : '#2c3e50'"
-  [style.background-color]="isActive ? '#e0f4f4' : '#ffffff'"
-  (click)="onClick()"
->
+<div #postCard [class]="postCardClasses" (click)="onClick()">
   {{ post?.title }}
 </div>

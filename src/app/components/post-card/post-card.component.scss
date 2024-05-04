@@ -1,14 +1,22 @@
 .post-card-container {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  padding: 10px;
-  overflow-x: auto;
+  padding: 10px; 
   overflow-y: auto;
-  font-family: "Arial", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.post-card-container:hover {
-  background-color: #e0f4f4 !important; /* Lighter shade for hover */
-  cursor: pointer;
+.post-card-container:hover:not(.active) {
+  background-color: #e0f4f4;
+}
+
+.active {
+  color: #f6f6f6;
+  background-color: #32a6a8;
+}
+
+.inactive {
+  color: #2c3e50;
+  background-color: #ffffff;
 }

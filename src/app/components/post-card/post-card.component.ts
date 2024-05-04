@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import classNames from 'classnames';
+
 import { Post } from '../../models/Post.model';
 
 @Component({
@@ -25,6 +27,13 @@ export class PostCardComponent {
     this.setSelfElementHeight();
   }
 
+  get postCardClasses() {
+    return classNames('post-card-container', {
+      active: this.isActive,
+      inactive: !this.isActive,
+    });
+  }
+
   updateActiveStatus() {
     this.isActive = this.post?.id === this.activePostId;
   }
@@ -32,8 +41,8 @@ export class PostCardComponent {
   setSelfElementHeight() {
     if (this.selfElement) {
       const width = this.selfElement.nativeElement.offsetWidth;
-
       const padding = parseInt(getComputedStyle(this.selfElement.nativeElement)['paddingTop']);
+
       this.selfElement.nativeElement.style.height = `${width - padding * 2}px`;
     }
   }
