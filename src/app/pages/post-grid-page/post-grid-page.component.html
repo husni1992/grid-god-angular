@@ -1,5 +1,9 @@
 @if (isLoading) {
-  <div class="loading-sdivinner">Loading...</div>
+  <div class="progress-bar">Loading...</div>
+}
+
+@if (activePostId) {
+  <div class="active-post-id">Active post id: {{ activePostId }}</div>
 }
 
 <div class="post-grid-container">
