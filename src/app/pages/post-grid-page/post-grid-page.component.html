@@ -1,0 +1,7 @@
+<p>post-grid-page works!</p>
+
+<div class="post-grid-container">
+  @for (post of posts; track post.id) {
+    <app-post-card [post]="post" />
+  }
+</div>
