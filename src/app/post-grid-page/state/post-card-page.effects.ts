@@ -11,7 +11,7 @@ export class PostGridPageEffects {
     this.actions$.pipe(
       ofType(PostCardPageActions.loadPostCards),
       switchMap(() =>
-        this.postCardService.getPosts().pipe(
+        this.postCardService.fetchPosts().pipe(
           map((postCards) =>
             PostCardPageActions.loadPostCardsSuccess({
               postCards,
