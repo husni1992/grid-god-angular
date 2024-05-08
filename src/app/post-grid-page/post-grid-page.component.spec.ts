@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostGridPageComponent } from './post-grid-page.component';
+import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PostGridPageComponent', () => {
   let component: PostGridPageComponent;
@@ -8,10 +10,10 @@ describe('PostGridPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PostGridPageComponent]
-    })
-    .compileComponents();
-    
+      imports: [HttpClientModule, StoreModule.forRoot()],
+      declarations: [PostGridPageComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PostGridPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
