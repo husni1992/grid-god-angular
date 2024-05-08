@@ -1,9 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import classNames from 'classnames';
 
-import { Post } from '../../models/Post.model';
 import { DEFAULT_PROPERTY_TO_DISPLAY, PROPERTIES_OF_POST } from './constants';
-import { calculateHeightBasedOnWidthAndPadding, getNextKeyOfObject } from './utils';
+import {
+  calculateHeightBasedOnWidthAndPadding,
+  getNextKeyOfObject,
+} from './utils';
+import { PostCard } from '../models/Post.model';
 
 @Component({
   selector: 'app-post-card',
@@ -13,14 +23,14 @@ import { calculateHeightBasedOnWidthAndPadding, getNextKeyOfObject } from './uti
   styleUrl: './post-card.component.scss',
 })
 export class PostCardComponent {
-  @Input() post: Post | undefined;
-  @Input() activePostId: Post['id'] | undefined;
-  @Output() setActivePost = new EventEmitter<Post['id']>();
+  @Input() post: PostCard | undefined;
+  @Input() activePostId: PostCard['id'] | undefined;
+  @Output() setActivePost = new EventEmitter<PostCard['id']>();
 
   @ViewChild('postCardContainer') selfElement: ElementRef | undefined;
 
   isActive: boolean = false;
-  currentProperty: keyof Post = DEFAULT_PROPERTY_TO_DISPLAY;
+  currentProperty: keyof PostCard = DEFAULT_PROPERTY_TO_DISPLAY;
 
   ngOnChanges() {
     this.updateActiveStatus();
@@ -29,7 +39,9 @@ export class PostCardComponent {
 
   ngAfterViewInit() {
     if (this.selfElement) {
-      const heightOfSelf = calculateHeightBasedOnWidthAndPadding(this.selfElement);
+      const heightOfSelf = calculateHeightBasedOnWidthAndPadding(
+        this.selfElement
+      );
       this.setElementHeight(this.selfElement, heightOfSelf);
     }
   }
@@ -49,7 +61,10 @@ export class PostCardComponent {
   }
 
   rotateDisplayProperty() {
-    this.currentProperty = getNextKeyOfObject(this.currentProperty, PROPERTIES_OF_POST);
+    this.currentProperty = getNextKeyOfObject(
+      this.currentProperty,
+      PROPERTIES_OF_POST
+    );
   }
 
   updateDisplayProperty() {
