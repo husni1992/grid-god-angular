@@ -11,7 +11,9 @@
     }
 
     @if (data.activePostCardId) {
-      <div class="active-post-id">Active post id: {{ data.activePostCardId }}</div>
+      <div class="active-post-id">
+        Active post id: {{ data.activePostCardId }}
+      </div>
     }
 
     @if (data.postCards) {
@@ -21,8 +23,6 @@
             [post]="postCard"
             [activePostCardId]="data.activePostCardId"
           />
-        } @empty {
-          <div>Nothing to show!</div>
         }
       </div>
     }

@@ -1,91 +1,88 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import classNames from 'classnames';
+import { Store } from '@ngrx/store';
 
 import { PostCardPageActions } from '../../state';
-
+import { PostCard } from '../../models/Post.model';
+import { PostGridPageState } from '../../state';
 import { DEFAULT_PROPERTY_TO_DISPLAY, PROPERTIES_OF_POST } from './constants';
 import {
   calculateHeightBasedOnWidthAndPadding,
   getNextKeyOfObject,
 } from './utils';
-import { PostCard } from '../../models/Post.model';
-import { Store } from '@ngrx/store';
-import { PostGridPageState } from '../../state';
 
 @Component({
   selector: 'app-post-card',
-  standalone: true,
-  imports: [],
   templateUrl: './post-card.component.html',
   styleUrl: './post-card.component.scss',
 })
 export class PostCardComponent {
   @Input() post!: PostCard;
   @Input() activePostCardId: PostCard['id'] | null = null;
-  @Output() setActivePost = new EventEmitter<PostCard['id']>();
 
-  @ViewChild('postCardContainer') selfElement: ElementRef | undefined;
+  @ViewChild('postCardContainer') private selfElement: ElementRef | undefined;
 
-  isActive: boolean = false;
-  currentProperty: keyof PostCard = DEFAULT_PROPERTY_TO_DISPLAY;
+  displayedProperty: keyof PostCard = DEFAULT_PROPERTY_TO_DISPLAY;
 
   constructor(private store: Store<PostGridPageState>) {}
 
-  ngOnChanges() {
-    this.updateActiveStatus();
+  ngOnChanges(): void {
     this.updateDisplayProperty();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
+    this.setPostCardElementHeight();
+  }
+
+  /**
+   * Checks if the current post card is the active one.
+   * A post card is considered active if its id matches the activePostCardId.
+   */
+  private get isCurrentPostCardActive() {
+    return this.post.id === this.activePostCardId;
+  }
+
+  get postCardClasses(): string {
+    return classNames('post-card-container', {
+      active: this.isCurrentPostCardActive,
+    });
+  }
+
+  /**
+   * Sets the height of the post card element based on its width and padding.
+   */
+  private setPostCardElementHeight() {
     if (this.selfElement) {
       const heightOfSelf = calculateHeightBasedOnWidthAndPadding(
         this.selfElement,
       );
-      this.setElementHeight(this.selfElement, heightOfSelf);
+
+      this.selfElement.nativeElement.style.height = `${heightOfSelf}px`;
     }
   }
 
-  get postCardClasses() {
-    return classNames('post-card-container', {
-      active: this.isActive,
-    });
+  private updateDisplayProperty(): void {
+    if (!this.isCurrentPostCardActive) {
+      this.displayedProperty = DEFAULT_PROPERTY_TO_DISPLAY;
+    }
   }
 
-  updateActiveStatus() {
-    this.isActive = this.post.id === this.activePostCardId;
-  }
-
-  setElementHeight(element: ElementRef, height: number) {
-    element.nativeElement.style.height = `${height}px`;
-  }
-
-  rotateDisplayProperty() {
-    this.currentProperty = getNextKeyOfObject(
-      this.currentProperty,
+  private rotateDisplayProperty(): void {
+    this.displayedProperty = getNextKeyOfObject(
+      this.displayedProperty,
       PROPERTIES_OF_POST,
     );
   }
 
-  updateDisplayProperty() {
-    if (this.post.id !== this.activePostCardId) {
-      this.currentProperty = DEFAULT_PROPERTY_TO_DISPLAY;
-    }
+  private setActivePostCard(postId: PostCard['id']): void {
+    this.store.dispatch(
+      PostCardPageActions.setActiveCard({ activePostCardId: postId }),
+    );
   }
 
-  onClick() {
+  onClick(): void {
     if (this.post.id !== this.activePostCardId) {
-      this.setActivePost.emit(this.post.id);
-
-      this.store.dispatch(
-        PostCardPageActions.setActiveCard({ activePostCardId: this.post.id }),
-      );
+      this.setActivePostCard(this.post.id);
     }
 
     this.rotateDisplayProperty();
