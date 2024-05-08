@@ -1,21 +1,30 @@
-<div class="post-grid-page">
-  @if (isLoading$ | async) {
-    <div class="progress-bar">Loading...</div>
-  }
+<ng-container
+  *ngIf="{
+    isLoading: isLoading$ | async,
+    activePostCardId: activePostCardId$ | async,
+    postCards: postCards$ | async
+  } as data"
+>
+  <div class="post-grid-page">
+    @if (data.isLoading) {
+      <div class="progress-bar">Loading...</div>
+    }
 
-  @if (activePostCardId$ | async; as activePostCardId) {
-    <div class="active-post-id">Active post id: {{ activePostCardId }}</div>
-  }
+    @if (data.activePostCardId) {
+      <div class="active-post-id">Active post id: {{ data.activePostCardId }}</div>
+    }
 
-  @if (postCards$ | async; as postCards) {
-    <div class="post-grid-container">
-      @for (postCard of postCards; track postCard.id) {
-        <app-post-card
-          [post]="postCard"
-          [activePostCardId]="activePostCardId$ | async"
-          (setActivePost)="setActivePost($event)"
-        />
-      }
-    </div>
-  }
-</div>
+    @if (data.postCards) {
+      <div class="post-grid-container">
+        @for (postCard of data.postCards; track postCard.id) {
+          <app-post-card
+            [post]="postCard"
+            [activePostCardId]="data.activePostCardId"
+          />
+        } @empty {
+          <div>Nothing to show!</div>
+        }
+      </div>
+    }
+  </div>
+</ng-container>

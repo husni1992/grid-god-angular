@@ -8,8 +8,7 @@ import {
   selectIsLoading,
   selectActivePostCardId,
 } from './state';
-import { PostGridPageState } from './state/post-card-page.reducer';
-import * as PostCardPageActions from './state/post-card-page.actions';
+import { PostGridPageState, PostCardPageActions } from './state';
 
 @Component({
   selector: 'app-post-grid-page',
@@ -27,11 +26,5 @@ export class PostGridPageComponent {
 
   ngOnInit() {
     this.store.dispatch(PostCardPageActions.loadPostCards());
-  }
-
-  setActivePost(activePostCardId: PostCard['id']): void {
-    this.store.dispatch(
-      PostCardPageActions.setActiveCard({ activePostCardId }),
-    );
   }
 }

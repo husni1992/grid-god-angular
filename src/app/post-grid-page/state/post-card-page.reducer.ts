@@ -18,6 +18,8 @@ export const initialState: PostGridPageState = {
 export const postGridPageReducer = createReducer(
   initialState,
 
+  on(Actions.loadPostCards, (state) => ({ ...state, isLoading: true })),
+
   on(Actions.setActiveCard, (state, { activePostCardId }) => ({
     ...state,
     activePostCardId,

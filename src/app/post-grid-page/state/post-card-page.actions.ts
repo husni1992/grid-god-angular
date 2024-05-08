@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { PostCard } from '../models/Post.model';
+import { PostGridPageState } from './post-card-page.reducer';
 
 export const loadPostCards = createAction('[Cards Page] Load Post Cards');
 export const loadPostCardsSuccess = createAction(
   '[Cards Page] Load Post Cards Success',
-  props<{ postCards: PostCard[] }>(),
+  props<{ postCards: PostGridPageState['postCards'] }>(),
 );
 export const loadPostCardsFailure = createAction(
   '[Cards Page] Load Post Cards Failure',
@@ -13,5 +13,5 @@ export const loadPostCardsFailure = createAction(
 
 export const setActiveCard = createAction(
   '[Cards Page] Activate Card',
-  props<{ activePostCardId: PostCard['id'] }>(),
+  props<{ activePostCardId: PostGridPageState['activePostCardId'] }>(),
 );

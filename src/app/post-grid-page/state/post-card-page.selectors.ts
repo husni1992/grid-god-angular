@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PostGridPageState } from './post-card-page.reducer';
+import { PostGridPageState } from '.';
 
 // Feature selector to access the entire feature state
 export const selectPostGridPageState =
