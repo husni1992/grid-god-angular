@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PostGridPageComponent } from './post-grid-page/post-grid-page.component';
-import { PostCardComponent } from './components/post-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { PostGridPageModule } from './post-grid-page/post-grid-page.module';
 
 @NgModule({
-  declarations: [AppComponent, PostGridPageComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PostCardComponent,
-    HttpClientModule,
+    PostGridPageModule,
+    StoreModule.forRoot(),
+    EffectsModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

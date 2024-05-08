@@ -13,7 +13,7 @@ import {
   calculateHeightBasedOnWidthAndPadding,
   getNextKeyOfObject,
 } from './utils';
-import { PostCard } from '../models/Post.model';
+import { PostCard } from '../../models/Post.model';
 
 @Component({
   selector: 'app-post-card',
@@ -24,7 +24,7 @@ import { PostCard } from '../models/Post.model';
 })
 export class PostCardComponent {
   @Input() post: PostCard | undefined;
-  @Input() activePostId: PostCard['id'] | undefined;
+  @Input() activePostCardId: PostCard['id'] | null = null;
   @Output() setActivePost = new EventEmitter<PostCard['id']>();
 
   @ViewChild('postCardContainer') selfElement: ElementRef | undefined;
@@ -40,7 +40,7 @@ export class PostCardComponent {
   ngAfterViewInit() {
     if (this.selfElement) {
       const heightOfSelf = calculateHeightBasedOnWidthAndPadding(
-        this.selfElement
+        this.selfElement,
       );
       this.setElementHeight(this.selfElement, heightOfSelf);
     }
@@ -53,7 +53,7 @@ export class PostCardComponent {
   }
 
   updateActiveStatus() {
-    this.isActive = this.post?.id === this.activePostId;
+    this.isActive = this.post?.id === this.activePostCardId;
   }
 
   setElementHeight(element: ElementRef, height: number) {
@@ -63,18 +63,18 @@ export class PostCardComponent {
   rotateDisplayProperty() {
     this.currentProperty = getNextKeyOfObject(
       this.currentProperty,
-      PROPERTIES_OF_POST
+      PROPERTIES_OF_POST,
     );
   }
 
   updateDisplayProperty() {
-    if (this.post?.id !== this.activePostId) {
+    if (this.post?.id !== this.activePostCardId) {
       this.currentProperty = DEFAULT_PROPERTY_TO_DISPLAY;
     }
   }
 
   onClick() {
-    if (this.post?.id !== this.activePostId) {
+    if (this.post?.id !== this.activePostCardId) {
       this.setActivePost.emit(this.post?.id);
     }
 

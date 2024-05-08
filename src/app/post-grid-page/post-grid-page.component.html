@@ -1,19 +1,21 @@
 <div class="post-grid-page">
-  @if (isLoading) {
+  @if (isLoading$ | async) {
     <div class="progress-bar">Loading...</div>
   }
 
-  @if (activePostId) {
-    <div class="active-post-id">Active post id: {{ activePostId }}</div>
+  @if (activePostCardId$ | async; as activePostCardId) {
+    <div class="active-post-id">Active post id: {{ activePostCardId }}</div>
   }
 
-  <div class="post-grid-container">
-    @for (post of posts; track post.id) {
-      <app-post-card
-        [post]="post"
-        [activePostId]="activePostId"
-        (setActivePost)="setActivePost($event)"
-      />
-    }
-  </div>
+  @if (postCards$ | async; as postCards) {
+    <div class="post-grid-container">
+      @for (postCard of postCards; track postCard.id) {
+        <app-post-card
+          [post]="postCard"
+          [activePostCardId]="activePostCardId$ | async"
+          (setActivePost)="setActivePost($event)"
+        />
+      }
+    </div>
+  }
 </div>
