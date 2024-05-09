@@ -1,5 +1,4 @@
 .post-grid-page {
-  background-color: #f4f4f4;
   padding: 20px;
 
   .post-grid-container {
@@ -15,13 +14,10 @@
   .active-post-id {
     display: flex;
     justify-content: center;
-    color: #32a6a8;
-    background-color: #f2f2f2;
-    font-size: 18px;
+    color: #1a8788;
+    font-size: 26px;
     font-weight: bold;
-    padding: 8px 16px;
+    padding: 0px 16px;
     margin-bottom: 20px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
   }
 }

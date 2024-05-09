@@ -1,8 +1,17 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 
-## Development server
+## How to setup
+
+Run `npm install` and everything is fine.
+
+
+## Run the app
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Unit tests
+
+The core functionality and the behaviors are well tested.
 
 # Answers to the questions
 
