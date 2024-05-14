@@ -13,6 +13,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 The core functionality and the behaviors are well tested.
 
+Run `npm run test` for running the tests.
+
 # Answers to the questions
 
 ## Question 1: Why is JWT is (or isn't) safe to use this? 
