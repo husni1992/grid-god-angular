@@ -1,30 +1,35 @@
 <ng-container
-  *ngIf="{
-    isLoading: isLoading$ | async,
-    activePostCardId: activePostCardId$ | async,
-    postCards: postCards$ | async
-  } as data"
+  *ngIf="vm$ | async as vm"
 >
   <div class="post-grid-page">
-    @if (data.isLoading) {
+    @if (vm.isPostCardsLoading) {
       <div class="progress-bar">Loading...</div>
     }
 
-    @if (data.activePostCardId) {
-      <div class="active-post-id">
-        Active post id: {{ data.activePostCardId }}
-      </div>
+    @if (vm.error) {
+      <div class="error">{{ vm.error }}</div>
     }
 
-    @if (data.postCards) {
-      <div class="post-grid-container">
-        @for (postCard of data.postCards; track postCard.id) {
-          <app-post-card
-            [post]="postCard"
-            [activePostCardId]="data.activePostCardId"
-          />
-        }
-      </div>
+    @if (!vm.error) {
+      @if (vm.activePostCardId) {
+        <div class="active-post-id">
+          Active post id: {{ vm.activePostCardId }}
+        </div>
+      }
+
+      @if (vm.postCards) {
+        <div class="post-grid-container">
+          @for (
+            postCard of vm.postCards;
+            track postCard.id
+          ) {
+            <app-post-card
+              [post]="postCard"
+              [activePostCardId]="vm.activePostCardId"
+            ></app-post-card>
+          }
+        </div>
+      }
     }
   </div>
 </ng-container>

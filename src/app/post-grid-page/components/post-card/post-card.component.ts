@@ -24,10 +24,11 @@ export class PostCardComponent {
 
   displayedProperty: keyof PostCard = DEFAULT_PROPERTY_TO_DISPLAY;
 
-  constructor(private store: Store<PostGridPageState>) {}
+  constructor(private store: Store<PostGridPageState>) { }
 
   ngOnChanges(): void {
-    this.updateDisplayProperty();
+    // if a new card is selected, reset the prev active one property
+    this.resetDisplayProperty();
   }
 
   ngAfterViewInit(): void {
@@ -36,7 +37,7 @@ export class PostCardComponent {
 
   /**
    * Checks if the current post card is the active one.
-   * A post card is considered active if its id matches the activePostCardId.
+   * A post card is considered active if it's id matches the activePostCardId.
    */
   private get isCurrentPostCardActive() {
     return this.post.id === this.activePostCardId;
@@ -61,7 +62,7 @@ export class PostCardComponent {
     }
   }
 
-  private updateDisplayProperty(): void {
+  private resetDisplayProperty(): void {
     if (!this.isCurrentPostCardActive) {
       this.displayedProperty = DEFAULT_PROPERTY_TO_DISPLAY;
     }
@@ -74,15 +75,12 @@ export class PostCardComponent {
     );
   }
 
-  private setActivePostCard(postId: PostCard['id']): void {
-    this.store.dispatch(
-      PostCardPageActions.setActiveCard({ activePostCardId: postId }),
-    );
-  }
-
   onClick(): void {
+    // Only dispatch active card if it's not the current one
     if (this.post.id !== this.activePostCardId) {
-      this.setActivePostCard(this.post.id);
+      this.store.dispatch(
+        PostCardPageActions.setActiveCard({ activePostCardId: this.post.id }),
+      );
     }
 
     this.rotateDisplayProperty();

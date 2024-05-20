@@ -19,3 +19,5 @@ export const selectActivePostCardId = createSelector(
   selectPostGridPageState,
   (state) => state.activePostCardId,
 );
+
+export const selectError = createSelector(selectPostGridPageState, state => state.error)

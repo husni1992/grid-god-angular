@@ -1,5 +1,6 @@
 import { ElementRef } from "@angular/core";
 
+// This is a TS generic fn, will automatically set return type based on input
 export function getNextKeyOfObject<T extends object>(
   currentProperty: keyof T,
   properties: Array<keyof T>,

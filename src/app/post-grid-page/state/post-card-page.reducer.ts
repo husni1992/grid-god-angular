@@ -7,12 +7,14 @@ export interface PostGridPageState {
   postCards: PostCard[];
   isLoading: boolean;
   activePostCardId: PostCard['id'] | null;
+  error: Error | null
 }
 
 export const initialState: PostGridPageState = {
   postCards: [],
   isLoading: false,
   activePostCardId: null,
+  error: null
 };
 
 export const postGridPageReducer = createReducer(
@@ -29,5 +31,11 @@ export const postGridPageReducer = createReducer(
     ...state,
     postCards,
     isLoading: false,
+  })),
+
+  on(Actions.loadPostCardsFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
   })),
 );
